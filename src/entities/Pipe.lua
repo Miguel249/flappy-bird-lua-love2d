@@ -7,7 +7,11 @@ function Pipe.new()
     self.gapHeight = 150
     self.speed = 100
     self.x = love.graphics.getWidth()
-    self.gapY = math.random(100, love.graphics.getHeight() - 200)
+
+    local screenHeight = love.graphics.getHeight()
+    local floorHeight = 80
+    self.gapY = math.random(100, screenHeight - self.gapHeight - floorHeight)
+
     return self
 end
 
@@ -16,9 +20,12 @@ function Pipe:update(dt)
 end
 
 function Pipe:draw()
-    love.graphics.setColor(0, 1, 0)
+    love.graphics.setColor(love.math.colorFromBytes(127, 51, 43))
+
     love.graphics.rectangle("fill", self.x, 0, self.width, self.gapY)
-    love.graphics.rectangle("fill", self.x, self.gapY + self.gapHeight, self.width, love.graphics.getHeight())
+
+    love.graphics.rectangle("fill", self.x, self.gapY + self.gapHeight, self.width,
+        love.graphics.getHeight() - self.gapY - self.gapHeight - 80)
 end
 
 function Pipe:isOffScreen()

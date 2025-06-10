@@ -8,8 +8,8 @@ function Bird.new()
     self.width = 30
     self.height = 30
     self.velocity = 0
-    self.gravity = 800
-    self.lift = -300
+    self.gravity = 1200
+    self.lift = -400
     return self
 end
 
@@ -22,8 +22,8 @@ function Bird:update(dt)
         self.velocity = 0
     end
 
-    if self.y + self.height > love.graphics.getHeight() then
-        self.y = love.graphics.getHeight() - self.height
+    if self.y + self.height > love.graphics.getHeight() - 80 then
+        self.y = love.graphics.getHeight() - self.height - 80
         self.velocity = 0
     end
 end
