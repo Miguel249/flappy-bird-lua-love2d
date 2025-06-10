@@ -163,27 +163,6 @@ function DrawMenu()
     end
 end
 
-function DrawButton(text, y, callback)
-    local mx, my = love.mouse.getPosition()
-    local width = 200
-    local height = 30
-    local x = (love.graphics.getWidth() - width) / 2
-
-    local inside = mx > x and mx < x + width and my > y and my < y + height
-
-    if inside then
-        love.graphics.setColor(1, 0.8, 0.4)
-        if love.mouse.isDown(1) then
-            callback()
-        end
-    else
-        love.graphics.setColor(1, 1, 1)
-    end
-
-    love.graphics.rectangle("line", x, y, width, height)
-    love.graphics.printf(text, x, y + 5, width, "center")
-end
-
 function love.keypressed(key)
     if GameState.is("menu") then
         if key == "space" then StartGame() end
