@@ -1,0 +1,41 @@
+# Compiled Lua bytecode
+*.luac
+
+# Editor swap/backup files
+*~
+*.swp
+*.bak
+*.tmp
+*.orig
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# VSCode config (optional)
+.vscode/
+
+# Love2D packaged game
+*.love
+
+# Build directories (if you export to exe or similar)
+build/
+dist/
+bin/
+
+# Logs
+*.log
+
+# Node/npm junk (just in case used for tooling)
+node_modules/
+package-lock.json
+
+# macOS metadata
+__MACOSX/
+
+# Windows Thumbs
+ehthumbs.db
+
+# Temporary files or cache
+.cache/
