@@ -1,9 +1,9 @@
 local Assets = require "src.core.Assets"
-local Bird = {}
-Bird.__index = Bird
+local Skull = {}
+Skull.__index = Skull
 
-function Bird.new()
-    local self = setmetatable({}, Bird)
+function Skull.new()
+    local self = setmetatable({}, Skull)
     self.assets = Assets.getInstance() -- Usar singleton
     self.x = 100
     self.y = 300
@@ -15,7 +15,7 @@ function Bird.new()
     return self
 end
 
-function Bird:update(dt)
+function Skull:update(dt)
     self.velocity = self.velocity + self.gravity * dt
     self.y = self.y + self.velocity * dt
 
@@ -30,19 +30,19 @@ function Bird:update(dt)
     end
 end
 
-function Bird:flap()
+function Skull:flap()
     self.velocity = self.lift
 end
 
-function Bird:draw()
+function Skull:draw()
     if self.assets.ui.skull then
         local skullScale = 30 / self.assets.ui.skull:getWidth()
         love.graphics.draw(self.assets.ui.skull, self.x, self.y, 0, skullScale, skullScale)
     end
 end
 
-function Bird:getBounds()
+function Skull:getBounds()
     return self.x, self.y, self.width, self.height
 end
 
-return Bird
+return Skull

@@ -1,4 +1,4 @@
-local Bird = require("src.entities.Bird")
+local Skull = require("src.entities.Skull")
 local Pipe = require("src.entities.Pipe")
 local Assets = require("src.core.Assets")
 local GameState = require("src.states.GameState")
@@ -9,7 +9,7 @@ PlayState.__index = PlayState
 function PlayState.new()
     local self = setmetatable({}, PlayState)
     self.assets = Assets.getInstance()
-    self.bird = Bird.new()
+    self.skull = Skull.new()
     self.pipes = {}
     self.pipeTimer = 0
     self.pipeSpawnInterval = 2
@@ -24,7 +24,7 @@ function PlayState:update(dt)
     self.assets.ui.floor.flScroll = (self.assets.ui.floor.flScroll +
         self.assets.ui.floor.flSpeed * dt) % self.assets.ui.floor.scale.flScaledWidth
 
-    self.bird:update(dt)
+    self.skull:update(dt)
 
     self.pipeTimer = self.pipeTimer + dt
     if self.pipeTimer > self.pipeSpawnInterval then
@@ -38,13 +38,13 @@ function PlayState:update(dt)
 
         if pipe:isOffScreen() then
             table.remove(self.pipes, i)
-        elseif pipe:collidesWith(self.bird) then
+        elseif pipe:collidesWith(self.skull) then
             GameState.set("gameover")
             return
         end
     end
 
-    if self.bird.y + self.bird.height >= love.graphics.getHeight() - self.floorHeight then
+    if self.skull.y + self.skull.height >= love.graphics.getHeight() - self.floorHeight then
         GameState.set("gameover")
     end
 end
@@ -56,7 +56,7 @@ function PlayState:draw()
 
     self:drawScrollingFloor()
 
-    self.bird:draw()
+    self.skull:draw()
 
     for _, pipe in ipairs(self.pipes) do
         pipe:draw()
@@ -64,15 +64,16 @@ function PlayState:draw()
 end
 
 function PlayState:drawScrollingBackground()
-    love.graphics.draw(self.assets.ui.background.image,
-        -self.assets.ui.background.bgScroll, 0, 0,
-        self.assets.ui.background.scale.bgScale,
-        self.assets.ui.background.scale.bgScale)
+    love.graphics.clear(0.5, 0.5, 0.5)
+    -- love.graphics.draw(self.assets.ui.background.image,
+    --     -self.assets.ui.background.bgScroll, 0, 0,
+    --     self.assets.ui.background.scale.bgScale,
+    --     self.assets.ui.background.scale.bgScale)
 
-    love.graphics.draw(self.assets.ui.background.image,
-        -self.assets.ui.background.bgScroll + self.assets.ui.background.scale.bgScaledWidth, 0, 0,
-        self.assets.ui.background.scale.bgScale,
-        self.assets.ui.background.scale.bgScale)
+    -- love.graphics.draw(self.assets.ui.background.image,
+    --     -self.assets.ui.background.bgScroll + self.assets.ui.background.scale.bgScaledWidth, 0, 0,
+    --     self.assets.ui.background.scale.bgScale,
+    --     self.assets.ui.background.scale.bgScale)
 end
 
 function PlayState:drawScrollingFloor()
@@ -89,18 +90,18 @@ end
 
 function PlayState:keypressed(key)
     if key == "space" then
-        self.bird:flap()
+        self.skull:flap()
     end
 end
 
 function PlayState:mousepressed(_, _, button)
     if button == 1 then
-        self.bird:flap()
+        self.skull:flap()
     end
 end
 
 function PlayState:reset()
-    self.bird = Bird.new()
+    self.skull = Skull.new()
     self.pipes = {}
     self.pipeTimer = 0
 end
