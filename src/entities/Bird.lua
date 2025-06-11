@@ -1,8 +1,10 @@
+local Assets = require "src.core.Assets"
 local Bird = {}
 Bird.__index = Bird
 
 function Bird.new()
     local self = setmetatable({}, Bird)
+    self.assets = Assets.new()
     self.x = 100
     self.y = 300
     self.width = 30
@@ -33,8 +35,10 @@ function Bird:flap()
 end
 
 function Bird:draw()
-    love.graphics.setColor(1, 1, 0)
-    love.graphics.rectangle("fill", self.x, self.y, self.width, self.height)
+    if self.assets.ui.skull then
+        local skullScale = 30 / self.assets.ui.skull:getWidth()
+        love.graphics.draw(self.assets.ui.skull, self.x, self.y, 0, skullScale, skullScale)
+    end
 end
 
 function Bird:getBounds()

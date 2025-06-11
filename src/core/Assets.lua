@@ -31,10 +31,17 @@ function Assets.new()
             flSpeed = 100
         },
         logo = love.graphics.newImage("assets/ui/logo.png"),
+        skull = love.graphics.newImage("assets/ui/skull.png"),
+        infernalPipe = love.graphics.newImage("assets/ui/infernal_pipe.png"),
         buttonPlayHover = love.graphics.newImage("assets/ui/button_play_hover.png"),
         buttonPlay = love.graphics.newImage("assets/ui/button_play.png"),
         buttonExitHover = love.graphics.newImage("assets/ui/button_exit_hover.png"),
         buttonExit = love.graphics.newImage("assets/ui/button_exit.png"),
+        buttonMenuHover = love.graphics.newImage("assets/ui/button_menu_hover.png"),
+        buttonMenu = love.graphics.newImage("assets/ui/button_menu.png"),
+        buttonRestartHover = love.graphics.newImage("assets/ui/button_restart_hover.png"),
+        buttonRestart = love.graphics.newImage("assets/ui/button_restart.png"),
+        gameOver = love.graphics.newImage("assets/ui/gameover.png")
     }
 
     self.ui.background.image:setWrap("repeat", "clamp")

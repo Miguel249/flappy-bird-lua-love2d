@@ -13,7 +13,7 @@ function StateManager.new()
 
     local assets = Assets.new()
 
-    local buttons = {
+    local menuButtons = {
         Button.new(assets.ui.buttonPlay, assets.ui.buttonPlayHover, function()
             self:startGame()
         end),
@@ -22,9 +22,21 @@ function StateManager.new()
         end),
     }
 
-    self.menuState = MenuState.new(buttons)
+    local gameOverButtons = {
+        Button.new(assets.ui.buttonRestart, assets.ui.buttonRestartHover, function()
+            self:startGame()
+        end),
+        Button.new(assets.ui.buttonMenu, assets.ui.buttonMenuHover, function()
+            GameState.set("menu")
+        end),
+        Button.new(assets.ui.buttonExit, assets.ui.buttonExitHover, function()
+            love.event.quit()
+        end),
+    }
+
+    self.menuState = MenuState.new(menuButtons)
     self.playState = PlayState.new()
-    self.gameOverState = GameOverState.new(self.playState)
+    self.gameOverState = GameOverState.new(self.playState, gameOverButtons)
 
     GameState.set("menu")
 
@@ -33,7 +45,7 @@ end
 
 function StateManager:update(dt)
     if GameState.is("menu") then
-        -- El menu no necesita update por ahora
+        self.menuState:update(dt)
     elseif GameState.is("play") then
         self.playState:update(dt)
     elseif GameState.is("gameover") then
@@ -67,7 +79,7 @@ function StateManager:mousepressed(x, y, button)
     elseif GameState.is("play") then
         self.playState:mousepressed(x, y, button)
     elseif GameState.is("gameover") then
-        self.gameOverState:mousepressed(x, y, button)
+        self:handleGameOverMousepress(x, y, button)
     end
 end
 
@@ -82,6 +94,19 @@ end
 function StateManager:handleMenuMousepress(x, y, button)
     if button == 1 then
         for _, btn in ipairs(self.menuState.buttons) do
+            if btn.x and btn.y and btn.width and btn.height then
+                if x > btn.x and x < btn.x + btn.width and
+                    y > btn.y and y < btn.y + btn.height then
+                    btn.callback()
+                end
+            end
+        end
+    end
+end
+
+function StateManager:handleGameOverMousepress(x, y, button)
+    if button == 1 then
+        for _, btn in ipairs(self.gameOverState.buttons) do
             if btn.x and btn.y and btn.width and btn.height then
                 if x > btn.x and x < btn.x + btn.width and
                     y > btn.y and y < btn.y + btn.height then

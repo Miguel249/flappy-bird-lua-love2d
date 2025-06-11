@@ -1,4 +1,3 @@
--- src/states/PlayState.lua
 local Bird = require("src.entities.Bird")
 local Pipe = require("src.entities.Pipe")
 local Assets = require("src.core.Assets")

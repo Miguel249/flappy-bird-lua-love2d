@@ -1,4 +1,3 @@
--- src/states/MenuState.lua - Versión mejorada
 local Assets = require("src.core.Assets")
 
 local MenuState = {}
@@ -19,10 +18,10 @@ end
 function MenuState:draw()
     -- Limpiar pantalla con color de fondo
     love.graphics.clear(0.2, 0.6, 0.9)
-    
+
     -- Dibujar logo
     self:drawLogo()
-    
+
     -- Dibujar botones
     self:drawButtons()
 end

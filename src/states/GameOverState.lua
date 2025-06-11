@@ -1,14 +1,14 @@
--- src/states/GameOverState.lua
 local Assets = require("src.core.Assets")
 local GameState = require("src.states.GameState")
 
 local GameOverState = {}
 GameOverState.__index = GameOverState
 
-function GameOverState.new(playState)
+function GameOverState.new(playState, buttons)
     local self = setmetatable({}, GameOverState)
     self.assets = Assets.new()
     self.playState = playState -- Referencia al estado de juego para poder dibujarlo de fondo
+    self.buttons = buttons
     self.fontLarge = love.graphics.newFont(36)
     self.fontMedium = love.graphics.newFont(22)
     return self
@@ -25,30 +25,29 @@ function GameOverState:draw()
         self.playState:draw()
     end
 
-    -- Overlay semi-transparente
-    love.graphics.setColor(0, 0, 0, 0.5)
-    love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
-    
-    -- Texto de game over
-    love.graphics.setColor(1, 1, 1)
-    love.graphics.setFont(self.fontLarge)
-    love.graphics.printf("¡Game Over!", 0, 120, love.graphics.getWidth(), "center")
+    self:drawGameOver()
 
     -- Instrucciones
-    love.graphics.setFont(self.fontMedium)
-    love.graphics.printf("[R] Reiniciar", 0, 200, love.graphics.getWidth(), "center")
-    love.graphics.printf("[M] Menú", 0, 230, love.graphics.getWidth(), "center")
-    love.graphics.printf("[ESC] Salir", 0, 260, love.graphics.getWidth(), "center")
+    self:drawButtons()
+end
+
+function GameOverState:drawGameOver()
+    if self.assets.ui.gameOver then
+        local gameoverScale = 250 / self.assets.ui.gameOver:getWidth()
+        local gameoverX = (love.graphics.getWidth() - self.assets.ui.gameOver:getWidth() * gameoverScale) / 2
+        local gameoverY = 40
+        love.graphics.draw(self.assets.ui.gameOver, gameoverX, gameoverY, 0, gameoverScale, gameoverScale)
+    end
+end
+
+function GameOverState:drawButtons()
+    for i, btn in ipairs(self.buttons) do
+        btn:draw(i)
+    end
 end
 
 function GameOverState:keypressed(key)
-    if key == "r" then
-        self:restartGame()
-    elseif key == "m" then
-        GameState.set("menu")
-    elseif key == "escape" then
-        love.event.quit()
-    end
+    -- Manejo de teclas específico del gameover se puede mover aquí si es necesario
 end
 
 function GameOverState:mousepressed(x, y, button)
