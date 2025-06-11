@@ -6,7 +6,7 @@ GameOverState.__index = GameOverState
 
 function GameOverState.new(playState, buttons)
     local self = setmetatable({}, GameOverState)
-    self.assets = Assets.new()
+    self.assets = Assets.getInstance()
     self.playState = playState -- Referencia al estado de juego para poder dibujarlo de fondo
     self.buttons = buttons
     self.fontLarge = love.graphics.newFont(36)

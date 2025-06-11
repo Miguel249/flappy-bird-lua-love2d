@@ -1,8 +1,15 @@
 local Assets = {}
-Assets.__index = Assets
+local instance = nil
 
-function Assets.new()
-    local self = setmetatable({}, Assets)
+function Assets.getInstance()
+    if not instance then
+        instance = Assets._new()
+    end
+    return instance
+end
+
+function Assets._new()
+    local self = {}
 
     local bgImage = love.graphics.newImage("assets/ui/background.png")
     local bgScale = love.graphics.getHeight() / bgImage:getHeight()
@@ -46,6 +53,20 @@ function Assets.new()
 
     self.ui.background.image:setWrap("repeat", "clamp")
     self.ui.floor.image:setWrap("repeat", "clamp")
+    
+    local texture = self.ui.infernalPipe
+    if texture then
+        local texWidth = texture:getWidth()
+        local texHeight = texture:getHeight()
+        local borderHeight = math.floor(texHeight / 4.3)
+        local repeatableHeight = texHeight - borderHeight
+        
+        self.pipeQuads = {
+            border = love.graphics.newQuad(0, repeatableHeight, texWidth, borderHeight, texWidth, texHeight),
+            repeatable = love.graphics.newQuad(0, 0, texWidth, repeatableHeight, texWidth, texHeight)
+        }
+    end
+    
     return self
 end
 

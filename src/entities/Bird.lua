@@ -4,7 +4,7 @@ Bird.__index = Bird
 
 function Bird.new()
     local self = setmetatable({}, Bird)
-    self.assets = Assets.new()
+    self.assets = Assets.getInstance() -- Usar singleton
     self.x = 100
     self.y = 300
     self.width = 30

@@ -11,7 +11,7 @@ StateManager.__index = StateManager
 function StateManager.new()
     local self = setmetatable({}, StateManager)
 
-    local assets = Assets.new()
+    local assets = Assets.getInstance()
 
     local menuButtons = {
         Button.new(assets.ui.buttonPlay, assets.ui.buttonPlayHover, function()

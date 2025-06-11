@@ -12,6 +12,9 @@ function love.update(dt)
 end
 
 function love.draw()
+    -- En love.draw() puedes agregar:
+    print("FPS: " .. love.timer.getFPS(), 10, 10)
+    print("Memory: " .. math.floor(collectgarbage("count")) .. "KB", 10, 30)
     stateManager:draw()
 end
 

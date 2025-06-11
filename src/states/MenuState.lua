@@ -5,7 +5,7 @@ MenuState.__index = MenuState
 
 function MenuState.new(buttons)
     local self = setmetatable({}, MenuState)
-    self.assets = Assets.new()
+    self.assets = Assets.getInstance()
     self.buttons = buttons
     return self
 end
@@ -16,13 +16,10 @@ function MenuState:update(dt)
 end
 
 function MenuState:draw()
-    -- Limpiar pantalla con color de fondo
     love.graphics.clear(0.2, 0.6, 0.9)
 
-    -- Dibujar logo
     self:drawLogo()
 
-    -- Dibujar botones
     self:drawButtons()
 end
 

@@ -8,7 +8,7 @@ PlayState.__index = PlayState
 
 function PlayState.new()
     local self = setmetatable({}, PlayState)
-    self.assets = Assets.new()
+    self.assets = Assets.getInstance()
     self.bird = Bird.new()
     self.pipes = {}
     self.pipeTimer = 0
