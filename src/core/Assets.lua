@@ -38,8 +38,8 @@ function Assets._new()
             flSpeed = 100
         },
         logo = love.graphics.newImage("assets/ui/logo.png"),
-        skull = love.graphics.newImage("assets/ui/skull.png"),
-        infernalPipe = love.graphics.newImage("assets/ui/infernal_pipe.png"),
+        skull = love.graphics.newImage("assets/ui/pollo.png"),
+        infernalPipe = love.graphics.newImage("assets/ui/infernal_pipe2.png"),
         buttonPlayHover = love.graphics.newImage("assets/ui/button_play_hover.png"),
         buttonPlay = love.graphics.newImage("assets/ui/button_play.png"),
         buttonExitHover = love.graphics.newImage("assets/ui/button_exit_hover.png"),
@@ -53,20 +53,20 @@ function Assets._new()
 
     self.ui.background.image:setWrap("repeat", "clamp")
     self.ui.floor.image:setWrap("repeat", "clamp")
-    
+
     local texture = self.ui.infernalPipe
     if texture then
         local texWidth = texture:getWidth()
         local texHeight = texture:getHeight()
         local borderHeight = math.floor(texHeight / 4.3)
         local repeatableHeight = texHeight - borderHeight
-        
+
         self.pipeQuads = {
             border = love.graphics.newQuad(0, repeatableHeight, texWidth, borderHeight, texWidth, texHeight),
             repeatable = love.graphics.newQuad(0, 0, texWidth, repeatableHeight, texWidth, texHeight)
         }
     end
-    
+
     return self
 end
 

@@ -51,7 +51,7 @@ function Pipe:drawTexturedSection(x, y, width, height, flipVertical)
 
     local scale = width / texWidth
 
-    local borderHeight = math.floor(texHeight / 4.3)
+    local borderHeight = math.floor(texHeight / 3)
     local repeatableHeight = texHeight - borderHeight
     local scaledBorderHeight = borderHeight * scale
     local scaledRepeatableHeight = repeatableHeight * scale
@@ -59,7 +59,7 @@ function Pipe:drawTexturedSection(x, y, width, height, flipVertical)
     if not flipVertical then
         local currentY = y
         local heightForRepeating = height - scaledBorderHeight
-        
+
         -- Dibujar borde superior
         love.graphics.draw(texture, borderQuad, x, currentY + scaledBorderHeight, 0, scale,
             -scaledBorderHeight / borderHeight)
@@ -98,7 +98,7 @@ function Pipe:drawWithBlur()
     -- Primero dibujar en el canvas normal
     love.graphics.setCanvas(self.canvas)
     love.graphics.clear()
-    
+
     if self.gapY > 0 then
         self:drawTexturedSection(self.x, 0, self.width, self.gapY, true)
     end
@@ -107,7 +107,7 @@ function Pipe:drawWithBlur()
     if bottomHeight > 0 then
         self:drawTexturedSection(self.x, self.gapY + self.gapHeight, self.width, bottomHeight, false)
     end
-    
+
     love.graphics.setCanvas()
 
     -- Aplicar blur si el shader está disponible
@@ -118,7 +118,7 @@ function Pipe:drawWithBlur()
         love.graphics.draw(self.canvas)
         love.graphics.setShader()
         love.graphics.setCanvas()
-        
+
         -- Dibujar el resultado con blur
         love.graphics.draw(self.blurCanvas)
     else

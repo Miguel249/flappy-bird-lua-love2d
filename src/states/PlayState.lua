@@ -64,16 +64,15 @@ function PlayState:draw()
 end
 
 function PlayState:drawScrollingBackground()
-    love.graphics.clear(0.5, 0.5, 0.5)
-    -- love.graphics.draw(self.assets.ui.background.image,
-    --     -self.assets.ui.background.bgScroll, 0, 0,
-    --     self.assets.ui.background.scale.bgScale,
-    --     self.assets.ui.background.scale.bgScale)
+    love.graphics.draw(self.assets.ui.background.image,
+        -self.assets.ui.background.bgScroll, 0, 0,
+        self.assets.ui.background.scale.bgScale,
+        self.assets.ui.background.scale.bgScale)
 
-    -- love.graphics.draw(self.assets.ui.background.image,
-    --     -self.assets.ui.background.bgScroll + self.assets.ui.background.scale.bgScaledWidth, 0, 0,
-    --     self.assets.ui.background.scale.bgScale,
-    --     self.assets.ui.background.scale.bgScale)
+    love.graphics.draw(self.assets.ui.background.image,
+        -self.assets.ui.background.bgScroll + self.assets.ui.background.scale.bgScaledWidth, 0, 0,
+        self.assets.ui.background.scale.bgScale,
+        self.assets.ui.background.scale.bgScale)
 end
 
 function PlayState:drawScrollingFloor()

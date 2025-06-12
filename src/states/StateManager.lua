@@ -11,7 +11,7 @@ StateManager.__index = StateManager
 function StateManager.new()
     local self = setmetatable({}, StateManager)
 
-    local assets = Assets.getInstance()
+    local assets = Assets.getInstance() -- Usar singleton
 
     local menuButtons = {
         Button.new(assets.ui.buttonPlay, assets.ui.buttonPlayHover, function()
@@ -74,12 +74,14 @@ function StateManager:keypressed(key)
 end
 
 function StateManager:mousepressed(x, y, button)
+    if button ~= 1 then return end -- Early exit si no es click izquierdo
+    
     if GameState.is("menu") then
-        self:handleMenuMousepress(x, y, button)
+        self:handleMenuMousepress(x, y)
     elseif GameState.is("play") then
         self.playState:mousepressed(x, y, button)
     elseif GameState.is("gameover") then
-        self:handleGameOverMousepress(x, y, button)
+        self:handleGameOverMousepress(x, y)
     end
 end
 
@@ -91,28 +93,21 @@ function StateManager:handleMenuKeypress(key)
     end
 end
 
-function StateManager:handleMenuMousepress(x, y, button)
-    if button == 1 then
-        for _, btn in ipairs(self.menuState.buttons) do
-            if btn.x and btn.y and btn.width and btn.height then
-                if x > btn.x and x < btn.x + btn.width and
-                    y > btn.y and y < btn.y + btn.height then
-                    btn.callback()
-                end
-            end
+function StateManager:handleMenuMousepress(x, y)
+    -- Usar el nuevo método optimizado de Button
+    for _, btn in ipairs(self.menuState.buttons) do
+        if btn:isClicked(x, y) then
+            btn.callback()
+            break -- Early exit después del primer click
         end
     end
 end
 
-function StateManager:handleGameOverMousepress(x, y, button)
-    if button == 1 then
-        for _, btn in ipairs(self.gameOverState.buttons) do
-            if btn.x and btn.y and btn.width and btn.height then
-                if x > btn.x and x < btn.x + btn.width and
-                    y > btn.y and y < btn.y + btn.height then
-                    btn.callback()
-                end
-            end
+function StateManager:handleGameOverMousepress(x, y)
+    for _, btn in ipairs(self.gameOverState.buttons) do
+        if btn:isClicked(x, y) then
+            btn.callback()
+            break -- Early exit después del primer click
         end
     end
 end
@@ -120,6 +115,17 @@ end
 function StateManager:startGame()
     self.playState:reset()
     GameState.set("play")
+end
+
+-- Soporte para touch (móvil/tablet)
+function StateManager:touchpressed(id, x, y, dx, dy, pressure)
+    -- Mapear touch a mouse click
+    self:mousepressed(x, y, 1)
+end
+
+function StateManager:touchreleased(id, x, y, dx, dy, pressure)
+    -- Si necesitas manejar release del touch, aquí sería
+    -- Por ahora solo necesitamos el press para los clicks
 end
 
 return StateManager

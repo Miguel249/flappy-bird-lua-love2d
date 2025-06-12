@@ -25,3 +25,15 @@ end
 function love.mousepressed(x, y, button)
     stateManager:mousepressed(x, y, button)
 end
+
+function love.touchpressed(id, x, y, dx, dy, pressure)
+    if stateManager and stateManager.touchpressed then
+        stateManager:touchpressed(id, x, y, dx, dy, pressure)
+    end
+end
+
+function love.touchreleased(id, x, y, dx, dy, pressure)
+    if stateManager and stateManager.touchreleased then
+        stateManager:touchreleased(id, x, y, dx, dy, pressure)
+    end
+end
