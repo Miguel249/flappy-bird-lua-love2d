@@ -138,7 +138,7 @@ function Pipe:isOffScreen()
 end
 
 function Pipe:givePoint()
-    if not self.scored and self.x + self.width < 100 then
+    if not self.scored and self.x + self.width/2 < 100 then
         self.scored = true
         return true
     end

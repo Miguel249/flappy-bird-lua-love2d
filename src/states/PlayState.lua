@@ -15,6 +15,8 @@ function PlayState.new()
     self.pipeSpawnInterval = 2
     self.floorHeight = 80
     self.points = 0
+    self.bgm = love.audio.newSource("assets/music/soundtrack.mp3", "static")
+    self.bgm:setLooping(true)
     return self
 end
 
@@ -122,6 +124,7 @@ function PlayState:mousepressed(_, _, button)
 end
 
 function PlayState:reset()
+    love.audio.play(self.bgm)
     self.skull = Skull.new()
     self.pipes = {}
     self.pipeTimer = 0

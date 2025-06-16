@@ -38,7 +38,7 @@ function Assets._new()
             flSpeed = 100
         },
         logo = love.graphics.newImage("assets/ui/logo.png"),
-        skull = love.graphics.newImage("assets/ui/pollo.png"),
+        skull = love.graphics.newImage("assets/ui/skull2.png"),
         infernalPipe = love.graphics.newImage("assets/ui/infernal_pipe2.png"),
         buttonPlayHover = love.graphics.newImage("assets/ui/button_play_hover.png"),
         buttonPlay = love.graphics.newImage("assets/ui/button_play.png"),
