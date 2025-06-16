@@ -32,6 +32,8 @@ function Pipe.new()
     self.canvas = love.graphics.newCanvas(love.graphics.getWidth(), love.graphics.getHeight())
     self.blurCanvas = love.graphics.newCanvas(love.graphics.getWidth(), love.graphics.getHeight())
 
+    self.scored = false
+
     return self
 end
 
@@ -134,6 +136,15 @@ end
 function Pipe:isOffScreen()
     return self.x + self.width < 0
 end
+
+function Pipe:givePoint()
+    if not self.scored and self.x + self.width < 100 then
+        self.scored = true
+        return true
+    end
+    return false
+end
+
 
 function Pipe:collidesWith(skull)
     local bx, by, bw, bh = skull:getBounds()

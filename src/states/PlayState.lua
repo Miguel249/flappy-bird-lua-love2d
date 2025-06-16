@@ -14,6 +14,7 @@ function PlayState.new()
     self.pipeTimer = 0
     self.pipeSpawnInterval = 2
     self.floorHeight = 80
+    self.points = 0
     return self
 end
 
@@ -39,12 +40,18 @@ function PlayState:update(dt)
         if pipe:isOffScreen() then
             table.remove(self.pipes, i)
         elseif pipe:collidesWith(self.skull) then
+            self.points = 0
             GameState.set("gameover")
             return
+        end
+
+        if pipe:givePoint() then
+            self.points = self.points + 1
         end
     end
 
     if self.skull.y + self.skull.height >= love.graphics.getHeight() - self.floorHeight then
+        self.points = 0
         GameState.set("gameover")
     end
 end
@@ -61,6 +68,21 @@ function PlayState:draw()
     for _, pipe in ipairs(self.pipes) do
         pipe:draw()
     end
+
+    if not GameState.is("gameover") then
+        self:drawPoints()
+    end
+end
+
+function PlayState:drawPoints()
+    local screenWidth = love.graphics.getWidth()
+    local font = love.graphics.getFont()
+    local text = tostring(self.points)
+    local textWidth = font:getWidth(text)
+    local x = (screenWidth - textWidth) / 2
+    local y = 20 -- Margen desde el tope
+
+    love.graphics.print(text, x, y)
 end
 
 function PlayState:drawScrollingBackground()
