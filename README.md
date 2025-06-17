@@ -1,142 +1,180 @@
-# 🎮 Flappy Bird OOP - Love2D
+# 🔥 Infernal Flappy Bird
 
-Un clon del clásico **Flappy Bird**, desarrollado con **Lua** y el framework **LÖVE2D**, utilizando un enfoque limpio de **programación orientada a objetos (OOP)**. Este proyecto está diseñado desde cero sin librerías externas, y con recursos visuales personalizados en estilo pixel art.
+Un juego estilo Flappy Bird desarrollado en Lua con LÖVE 2D, con temática infernal y efectos visuales modernos.
 
----
+![Screenshot del Menú](assets/examples/screenshot_menu.png)
 
-## 📸 Captura de Pantalla
+![Screenshot del Menú](assets/examples/screenshot_game.png)
 
-![Captura del menú](assets/examples/screenshot_menu.png)
+![Screenshot del Menú](assets/examples/screenshot_gameover.png)
 
----
+## 🎮 Características
 
-## ✨ Características
+- **Gráficos personalizados** con temática infernal
+- **Efectos de blur** en las tuberías usando shaders GLSL
+- **Arquitectura modular** con patrón State Manager
+- **Sistema de UI responsivo** con botones interactivos
+- **Backgrounds animados** con parallax scrolling
+- **Música de fondo** y efectos de sonido
+- **Soporte para múltiples plataformas** (PC, móvil, web)
 
-- 🐤 Mecánica de juego fluida tipo Flappy Bird
-- 🧱 Obstáculos generados dinámicamente
-- 💥 Colisiones con tubos, suelo y techo
-- 🎨 Pixel art propio y estilo visual profesional
-- 🖼️ Menú principal con botones personalizados:
-  - Iniciar juego
-  - Salir
-- 🔄 Estados del juego:
-  - Menú
-  - Jugando
-  - Game Over
-- 🖱️ Controles intuitivos:
-  - Click del mouse o tecla **espacio** para saltar
+## 🚀 Instalación y Ejecución
 
----
+### Requisitos
+- **LÖVE 2D** (versión 11.0 o superior)
+- Sistema operativo: Windows, macOS, Linux, Android, iOS
 
-## 🗂️ Estructura del Proyecto
+### Instalación
+1. Descarga e instala [LÖVE 2D](https://love2d.org/)
+2. Clona este repositorio:
+   ```bash
+   git clone https://github.com/tu-usuario/infernal-flappy-bird.git
+   cd infernal-flappy-bird
+   ```
+3. Ejecuta el juego:
+   ```bash
+   love .
+   ```
 
-``` plaintext
-flappy-bird-lua-love2d/
-│
-├── assets/
-│   └── examples/
-│       └── screenshot_menu.png
-│   └── ui/
-│       ├── background.png
-│       ├── button_exit_hover.png
-│       ├── button_exit.png
-│       ├── button_play_hover.png
-│       ├── button_play.png
-│       └── logo.png
-│
-├── src/
-│   ├── Bird.lua
-│   ├── GameState.lua
-│   └── Pipe.lua
-│
-├── .luarc.json
-├── conf.lua
-├── main.lua
-└── README.md
+### Ejecución alternativa
+- **Windows**: Arrastra la carpeta del proyecto sobre `love.exe`
+- **macOS**: Arrastra la carpeta sobre la aplicación LÖVE
+- **Linux**: `love /ruta/al/proyecto`
+
+## 🎯 Controles
+
+- **Espacio** / **Click izquierdo** / **Toque**: Hacer volar la calavera
+- **Escape**: Salir del juego (en menú)
+- **Ratón**: Navegar por los menús
+
+## 🏗️ Arquitectura del Proyecto
+
+```
+src/
+├── core/
+│   ├── Assets.lua          # Gestión de recursos (Singleton)
+│   └── Shaders.lua         # Shaders GLSL (Singleton)
+├── entities/
+│   ├── Pipe.lua           # Lógica de las tuberías
+│   └── Skull.lua          # Lógica del jugador
+├── states/
+│   ├── GameState.lua      # Gestión global de estados
+│   ├── MenuState.lua      # Estado del menú principal
+│   ├── PlayState.lua      # Estado de juego
+│   ├── GameOverState.lua  # Estado de game over
+│   └── StateManager.lua   # Controlador de estados
+└── ui/
+    └── Button.lua         # Sistema de botones reutilizable
+
+assets/
+├── music/
+│   └── soundtrack.mp3
+├── shaders/
+│   └── blur.frag         # Shader de blur para efectos
+├── ui/
+│   ├── background.png
+│   ├── floor.png
+│   ├── logo.png
+│   ├── skull2.png
+│   ├── infernal_pipe2.png
+│   ├── gameover.png
+│   └── button_*.png
+└── examples/
+    └── screenshot_menu.png
 ```
 
----
+## 🔧 Características Técnicas
 
-## 🚀 Requisitos
+### Patrones de Diseño Implementados
+- **Singleton Pattern**: Para Assets y Shaders
+- **State Pattern**: Para manejo de estados del juego
+- **Object Pooling**: Optimización de memoria para entidades
+- **Component Pattern**: Separación de lógica y renderizado
 
-- [Love2D](https://love2d.org/) (versión 11.x recomendada)
+### Optimizaciones
+- **Lazy Loading**: Carga de recursos bajo demanda
+- **Early Exit**: Optimización de loops y condicionales
+- **Canvas Caching**: Reutilización de canvas para efectos
+- **Batching**: Agrupación de llamadas de renderizado
 
----
+### Efectos Visuales
+- **Blur Shader**: Efectos de desenfoque en tuberías
+- **Parallax Scrolling**: Fondos animados multicapa
+- **Smooth Animations**: Interpolación de movimientos
+- **Responsive UI**: Adaptación a diferentes resoluciones
 
-## ▶️ Cómo Ejecutar
+## 🎨 Personalización
 
-Abre una terminal en la carpeta del proyecto y ejecuta:
-
-```bash
-love .
+### Modificar Configuración del Juego
+```lua
+-- En PlayState.lua
+self.pipeSpawnInterval = 2    -- Intervalo entre tuberías
+self.skull.gravity = 1200     -- Gravedad del personaje
+self.skull.lift = -400        -- Fuerza del salto
 ```
 
-**Alternativa:** Si `love` no está en tu PATH, arrastra la carpeta del proyecto directamente al ejecutable de LÖVE2D.
+### Agregar Nuevos Efectos de Shader
+```glsl
+// En assets/shaders/
+// Crear nuevos archivos .frag para efectos personalizados
+```
 
----
+### Cambiar Sprites
+- Reemplaza los archivos PNG en `assets/ui/`
+- Mantén las mismas dimensiones para compatibilidad
+- Usa transparencia para sprites irregulares
 
-## 🛠️ Tecnologías Usadas
+## 🐛 Depuración
 
-- **Lenguaje:** Lua
-- **Motor:** Love2D
-- **Paradigma:** Programación orientada a objetos (con clases simples)
-- **Recursos visuales:** Pixel art personalizado
+### Modo Debug
+Agrega esta línea en `main.lua` para información de debug:
+```lua
+love.graphics.print("FPS: " .. love.timer.getFPS(), 10, 10)
+```
 
----
+### Problemas Comunes
+- **Texturas no cargan**: Verifica las rutas en `Assets.lua`
+- **Lag en móvil**: Reduce la calidad de los shaders
+- **Audio no funciona**: Comprueba los códecs soportados
 
-## 🎮 Controles
+## 🚀 Roadmap
 
-| Acción | Tecla/Mouse |
-|--------|-------------|
-| Saltar | `Espacio` o `Click izquierdo` |
-| Menú   | `Escape` (desde el juego) |
+- [ ] Sistema de power-ups
+- [ ] Múltiples personajes desbloqueables
+- [ ] Leaderboard local
+- [ ] Modo difícil con obstáculos adicionales
+- [ ] Integración con servicios de puntuación online
+- [ ] Port a otras plataformas (Steam, itch.io)
 
----
+## 🤝 Contribuciones
 
-## 📁 Descripción de Archivos
+Las contribuciones son bienvenidas. Por favor:
 
-### Clases Principales (src/)
-
-- Bird.lua - Lógica del pájaro (física, animación, colisiones)
-- Pipe.lua - Tubo individual con detección de colisiones
-- GameState.lua - Gestión de estados del juego (Menú, Jugando, Game Over)
-
-### Configuración
-
-- conf.lua - Configuración de ventana y Love2D
-- main.lua - Punto de entrada principal del juego
-- .luarc.json - Configuración del entorno Lua para desarrollo
-
----
-
-## 🚧 Características Futuras
-
-- Sistema de puntuación
-- Efectos de sonido
-- Música de fondo
-- Mejores animaciones
-- Sistema de records/highscores
-
----
+1. Haz fork del proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/nueva-caracteristica`)
+3. Commit tus cambios (`git commit -am 'Agrega nueva característica'`)
+4. Push a la rama (`git push origin feature/nueva-caracteristica`)
+5. Abre un Pull Request
 
 ## 📄 Licencia
 
-Este proyecto está bajo la licencia MIT. Puedes usar el código como base para tus propios juegos o estudios.
+Este proyecto está bajo la Licencia MIT.
+
+## 🎓 Créditos
+
+- **Desarrollador**: [Miguel Angel Charris Carmona]
+- **Engine**: LÖVE 2D
+- **Inspiración**: Flappy Bird de Dong Nguyen
+- **Assets**: Creación propia
+
+## 📞 Contacto
+
+- **GitHub**: [@Miguel249](https://github.com/Miguel249)
+- **Email**: miguelangelcharriscarmona@gmail.com
+- **LinkedIn**: [Miguel Angel Charris Carmona](https://www.linkedin.com/in/miguel-angel-charris-carmona-16915928b/)
 
 ---
 
-## 🙌 Créditos
+⭐ Si te gustó el proyecto, ¡dale una estrella en GitHub!
 
-**Desarrollado por:** Miguel Angel Charris Carmona
-**Sprites y diseño gráfico:** Hechos a mano para este proyecto
-
----
-
-## 🐛 Reportar Bugs
-
-Si encuentras algún error o tienes sugerencias, puedes:
-
-- Abrir un issue en este repositorio
-- Contactarme directamente
-
-¡Gracias por jugar! 🎮
+#GameDev #Love2D #Lua #FlappyBird #IndieGame
